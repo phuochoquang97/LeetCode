@@ -15,7 +15,7 @@ class Solution:
                 return
 
             dfs(node.right)
-            self.val += node.val
+            self.val += node.val  # keep track of total sum of node whoes val is greater than val of current node
             node.val = self.val
             dfs(node.left)
 
