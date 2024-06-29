@@ -1,17 +1,22 @@
 class Solution:
     def numberOfSubarrays(self, nums: List[int], goal: int) -> int:
         nums = [num % 2 for num in nums]
-        prefix_sum = 0
-        prefix_counts = defaultdict(int)
-        prefix_counts[0] = (
-            1  # Initialize to handle the case where a subarray starts from index 0
-        )
-        count = 0
 
-        for num in nums:
-            prefix_sum += num
-            if prefix_sum - goal in prefix_counts:
-                count += prefix_counts[prefix_sum - goal]
-            prefix_counts[prefix_sum] += 1
+        def h(x):
+            if x < 0:
+                return 0
 
-        return count
+            l, current_sum = 0
+            ret = 0
+            for r in range(len(nums)):
+                current_sum += nums[r]
+
+                while current_sum > x:
+                    current_sum -= nums[l]
+                    l += 1
+
+                ret += r - l + 1
+
+            return ret
+
+        return h(goal) - h(goal - 1)
