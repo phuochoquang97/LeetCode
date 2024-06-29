@@ -1,14 +1,21 @@
 class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
-        prefix_sum = 0
-        prefix_counts = defaultdict(int)
-        prefix_counts[0] = 1  # Initialize to handle the case where a subarray starts from index 0
-        count = 0
+        # h(x) is the number of subarrays with sum <= x
+        # numbers of subarrays = h(goal) - h(goal - 1)
+        def h(x):
+            if x < 0:
+                return 0  # no subarray with negative sum
 
-        for num in nums:
-            prefix_sum += num
-            if prefix_sum - goal in prefix_counts:
-                count += prefix_counts[prefix_sum - goal]
-            prefix_counts[prefix_sum] += 1
+            l = 0
+            current_sum = 0
+            ret = 0
+            for r in range(0, len(nums)):
+                current_sum += nums[r]
+                while current_sum > x:  # move left pointer to decrease current_sum
+                    current_sum -= nums[l]
+                    l += 1
+                ret += r - l + 1
 
-        return count
+            return ret
+
+        return h(goal) - h(goal - 1)
