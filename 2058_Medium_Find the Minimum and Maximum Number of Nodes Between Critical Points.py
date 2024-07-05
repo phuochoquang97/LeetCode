@@ -34,3 +34,31 @@ class Solution:
             )
 
         return [min_distance, max_distance]
+
+
+# class Solution:
+#     def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
+#         # find all critical points and store in a list
+#         # process the list
+#         store = []
+#         current = head
+#         while current:
+#             store.append(current.val)
+#             current = current.next
+
+#         critical = []
+#         for i in range(1, len(store) - 1):
+#             if (store[i] < store[i - 1] and store[i] < store[i + 1]) or (
+#                 store[i] > store[i - 1] and store[i] > store[i + 1]
+#             ):
+#                 critical.append(i)
+
+#         if len(critical) < 2:
+#             return [-1, -1]
+#         # print(critical)
+
+#         min_dis = critical[-1] - critical[0]
+#         for r in range(1, len(critical)):
+#             min_dis = min(min_dis, critical[r] - critical[r - 1])
+
+#         return [min_dis, critical[-1] - critical[0]]
